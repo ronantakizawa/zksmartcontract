@@ -1,24 +1,14 @@
-const snarkjs = require("snarkjs");
-const fs = require("fs");
+const express = require('express');
+const path = require('path');
+const app = express();
+const port = 3000;
 
-async function run() {
-    const { proof, publicSignals } = await snarkjs.plonk.fullProve({age: 18, ageLimit: 21}, "circuit.wasm", "circuit_final.zkey");
+app.use(express.static(path.join(__dirname, '.'))); // Serve static files from the current directory
 
-    console.log("Proof: ");
-    console.log(JSON.stringify(proof, null, 1));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html')); // Replace 'yourHtmlFileName.html' with the name of your HTML file
+});
 
-    const vKey = JSON.parse(fs.readFileSync("verification_key.json"));
-
-    const res = await snarkjs.plonk.verify(vKey, publicSignals, proof);
-
-    if (res === true) {
-        console.log("Verification OK");
-    } else {
-        console.log("Invalid proof");
-    }
-
-}
-
-run().then(() => {
-    process.exit(0);
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}/`);
 });
