@@ -1,4 +1,4 @@
-**Zero-Knowledge ID Check**
+**Zero-Knowledge Wallet Balance Comparison**
 
 Using a ZK-Snark, this smart contract can verify that this wallet comparison ZKP is zero-knowledge and valid (Has the expected inputs and outputs).
 
